@@ -1,0 +1,226 @@
+<html>
+    <head>
+        <title>Ninjaman</title>
+        <style type = "text/css">
+            * {
+                margin: 0;
+                padding: 0;
+            }
+            .row {
+                line-height: 0px;
+            }
+            .wall {
+                background-color: purple;
+                height: 40px;
+                width: 40px;
+                display: inline-block;
+            }
+            .sushi {
+                background-color: black;
+                height: 40px;
+                width: 40px;
+                display: inline-block;
+                background-image: url('sushi.png');
+                background-size: contain;
+            }
+            .blank {
+                background-color: black;
+                height: 40px;
+                width: 40px;
+                display: inline-block;
+            }
+            .onigiri {
+                background-color: black;
+                height: 40px;
+                width: 40px;
+                display: inline-block;
+                background-image: url('onigiri.png');
+                background-size: contain;
+            }
+            .bluey {
+                background-color: black;
+                height: 40px;
+                width: 40px;
+                display: inline-block;
+                background-image: url('bluey.png');
+                background-size: contain;
+            }
+            .red {
+                background-color: black;
+                height: 40px;
+                width: 40px;
+                display: inline-block;
+                background-image: url('red.png');
+                background-size: contain;
+            }
+            .pinky {
+                background-color: black;
+                height: 40px;
+                width: 40px;
+                display: inline-block;
+                background-image: url('pinky.png');
+                background-size: contain;
+            }
+            .pumpky {
+                background-color: black;
+                height: 40px;
+                width: 40px;
+                display: inline-block;
+                background-image: url('pumpky.png');
+                background-size: contain;
+            }
+            #ninjaman {
+                background-color: black; 
+                height: 40px;
+                width: 40px;
+                display: inline-block;
+                background-image: url('ninja.gif');
+                background-size: contain;
+                position: absolute;
+            }
+        </style>
+    </head>
+    <body>
+        <div id = 'world'></div>
+        <div id = 'ninjaman'></div>
+        Score: <span id = 'score'>0</span>
+            <script type = "text/javascript">
+                var world = [];
+                for (var row = 0; row < Math.floor(Math.random() * 8) + 3; row++)
+                {
+                    world.push([]) //create rows
+                }
+                var columns = Math.floor(Math.random() * 8) + 3; //columns variable to keep number of columns consistent across each row
+                for (var row = 0; row < world.length; row++)
+                {
+                    for (var col = 0; col < columns; col++)
+                    {
+                        world[row][col] = Math.floor(Math.random() * 4) //fill matrix w/ worldDict keys
+                    }
+                }
+                world[1][1] = 0
+                world[0].fill(1); //top wall
+                world[world.length - 1].fill(1); //bottom wall
+                for (var i = 0; i < world.length; i++)
+                {
+                    world[i][0] = 1 //left wall
+                    world[i][columns - 1] = 1 //right wall
+                }
+                var worldDict = {
+                    0: 'blank',
+                    1: 'wall',
+                    2: 'sushi',
+                    3: 'onigiri',
+                    4: 'bluey',
+                    5: 'red',
+                    6: 'pinky',
+                    7: 'pumpky'
+                };
+                function drawWorld(){
+                    var output = "";
+
+                    for (var row = 0; row < world.length; row++)
+                    {
+                        output += "<div class = 'row'>"
+                        for (var x = 0; x < world[row].length; x++)
+                        {
+                            output += "<div class = '" + worldDict[world[row][x]] + "'></div>"
+                        }
+                        output += "</div>"
+                    }
+
+                    document.getElementById('world').innerHTML = output;
+                }
+                drawWorld();
+                
+                var ninjaman = { //DICT
+                    x: 1,
+                    y: 1
+                }
+
+                function drawNinja(){
+                    document.getElementById('ninjaman').style.top = ninjaman.y * 40 + 'px'
+                    document.getElementById('ninjaman').style.left = ninjaman.x * 40 + 'px'
+                }
+                
+                drawNinja();
+
+                var score = 0;
+                
+                document.onkeydown = function(e)
+                {
+                    if (e.keyCode == 37) //LEFT
+                    {
+                        if (world[ninjaman.y][ninjaman.x - 1] != 1)
+                        {
+                            if (world[ninjaman.y][ninjaman.x - 1] == 2)
+                            {
+                                score += 10
+                                world[ninjaman.y][ninjaman.x - 1] = 0
+                            }
+                            if (world[ninjaman.y][ninjaman.x - 1] == 3)
+                            {
+                                score += 5
+                                world[ninjaman.y][ninjaman.x - 1] = 0
+                            }
+                            ninjaman.x--
+                        }
+                    }
+                    if (e.keyCode == 39) //RIGHT
+                    {
+                        if (world[ninjaman.y][ninjaman.x + 1] != 1)
+                        {
+                            if (world[ninjaman.y][ninjaman.x + 1] == 2)
+                            {
+                                score += 10
+                                world[ninjaman.y][ninjaman.x + 1] = 0
+                            }
+                            if (world[ninjaman.y][ninjaman.x + 1] == 3)
+                            {
+                                score += 5
+                                world[ninjaman.y][ninjaman.x + 1] = 0
+                            }
+                            ninjaman.x++
+                        }
+                    }
+                    if (e.keyCode == 40) //DOWN
+                    {
+                        if (world[ninjaman.y + 1][ninjaman.x] != 1)
+                        {
+                            if (world[ninjaman.y + 1][ninjaman.x] == 2)
+                            {
+                                score += 10
+                                world[ninjaman.y + 1][ninjaman.x] = 0
+                            }
+                            if (world[ninjaman.y + 1][ninjaman.x] == 3)
+                            {
+                                score += 5
+                                world[ninjaman.y + 1][ninjaman.x] = 0
+                            }
+                            ninjaman.y++
+                        }
+                    }
+                    if (e.keyCode == 38) //UP
+                    {
+                        if (world[ninjaman.y - 1][ninjaman.x] != 1)
+                        {
+                            if (world[ninjaman.y - 1][ninjaman.x] == 2)
+                            {
+                                score += 10
+                                world[ninjaman.y - 1][ninjaman.x] = 0
+                            }
+                            if (world[ninjaman.y - 1][ninjaman.x] == 3)
+                            {
+                                score += 5
+                                world[ninjaman.y - 1][ninjaman.x] = 0
+                            }
+                            ninjaman.y--
+                        }
+                    }
+                    drawNinja();
+                    drawWorld();
+                    document.getElementById('score').innerHTML = score;
+                }
+            </script>
+    </body>
+</html>
