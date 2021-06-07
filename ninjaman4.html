@@ -181,6 +181,40 @@
                 drawpumpky();
 
                 var score = 0;
+
+                function chase(g) //ghost var. Needs wall check.
+                {
+                    if (ninjaman.x != g.x)
+                    {
+                        if (ninjaman.x > g.x)
+                        {
+                            if (world[g.y][g.x + 1] != 1) {
+                                g.x++
+                            }
+                        }
+                        if (ninjaman.x < g.x)
+                        {
+                            if (world[g.y][g.x - 1] != 1) {
+                                g.x--
+                            }
+                        }
+                    }
+                    else if (ninjaman.y != g.y)
+                    {
+                        if (ninjaman.y > g.y)
+                        {
+                            if (world[g.y + 1][g.x] != 1) {
+                                g.y++
+                            }
+                        }
+                        if (ninjaman.y < g.y)
+                        {
+                            if (world[g.y - 1][g.x] != 1) {
+                                g.y--
+                            }
+                        }
+                    }
+                }
                 
                 document.onkeydown = function(e) //make ghosts chase ninjaman
                 {
@@ -253,6 +287,12 @@
                         }
                     }
                     drawNinja();
+                    chase(bluey);
+                    chase(pinky);
+                    chase(pumpky);
+                    drawbluey();
+                    drawpinky();
+                    drawpumpky();
                     drawWorld();
                     document.getElementById('score').innerHTML = score;
                 }
