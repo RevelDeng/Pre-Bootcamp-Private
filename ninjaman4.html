@@ -37,37 +37,32 @@
                 background-image: url('onigiri.png');
                 background-size: contain;
             }
-            .bluey {
+            #bluey {
                 background-color: black;
                 height: 40px;
                 width: 40px;
                 display: inline-block;
-                background-image: url('bluey.png');
+                background-image: url('bluey.gif');
                 background-size: contain;
+                position: absolute;
             }
-            .red {
+            #pinky {
                 background-color: black;
                 height: 40px;
                 width: 40px;
                 display: inline-block;
-                background-image: url('red.png');
+                background-image: url('pinky.gif');
                 background-size: contain;
+                position: absolute;
             }
-            .pinky {
+            #pumpky {
                 background-color: black;
                 height: 40px;
                 width: 40px;
                 display: inline-block;
-                background-image: url('pinky.png');
+                background-image: url('pumpky.gif');
                 background-size: contain;
-            }
-            .pumpky {
-                background-color: black;
-                height: 40px;
-                width: 40px;
-                display: inline-block;
-                background-image: url('pumpky.png');
-                background-size: contain;
+                position: absolute;
             }
             #ninjaman {
                 background-color: black; 
@@ -83,14 +78,17 @@
     <body>
         <div id = 'world'></div>
         <div id = 'ninjaman'></div>
+        <div id = 'bluey'></div>
+        <div id = 'pinky'></div>
+        <div id = 'pumpky'></div>
         Score: <span id = 'score'>0</span>
             <script type = "text/javascript">
                 var world = [];
-                for (var row = 0; row < Math.floor(Math.random() * 8) + 3; row++)
+                var columns = Math.floor(Math.random() * 9) + 8; //columns variable to keep number of columns consistent across each row
+                for (var row = 0; row < columns; row++)
                 {
                     world.push([]) //create rows
                 }
-                var columns = Math.floor(Math.random() * 8) + 3; //columns variable to keep number of columns consistent across each row
                 for (var row = 0; row < world.length; row++)
                 {
                     for (var col = 0; col < columns; col++)
@@ -106,15 +104,12 @@
                     world[i][0] = 1 //left wall
                     world[i][columns - 1] = 1 //right wall
                 }
+                
                 var worldDict = {
                     0: 'blank',
                     1: 'wall',
                     2: 'sushi',
                     3: 'onigiri',
-                    4: 'bluey',
-                    5: 'red',
-                    6: 'pinky',
-                    7: 'pumpky'
                 };
                 function drawWorld(){
                     var output = "";
@@ -131,6 +126,7 @@
 
                     document.getElementById('world').innerHTML = output;
                 }
+
                 drawWorld();
                 
                 var ninjaman = { //DICT
@@ -145,13 +141,52 @@
                 
                 drawNinja();
 
+                var bluey = {
+                    x: 1, 
+                    y: columns - 2
+                }
+
+                function drawbluey()
+                {
+                    document.getElementById('bluey').style.top = bluey.x * 40 + 'px'
+                    document.getElementById('bluey').style.left = bluey.y * 40 + 'px'
+                }
+
+                drawbluey();
+
+                var pinky = {
+                    x: columns - 2,
+                    y: 1
+                }
+
+                function drawpinky()
+                {
+                    document.getElementById('pinky').style.top = pinky.x * 40 + 'px'
+                    document.getElementById('pinky').style.left = pinky.y * 40 + 'px'
+                }
+
+                drawpinky();
+
+                var pumpky = {
+                    x: columns - 2,
+                    y: columns - 2
+                }
+
+                function drawpumpky()
+                {
+                    document.getElementById('pumpky').style.top = pumpky.x * 40 + 'px'
+                    document.getElementById('pumpky').style.left = pumpky.y * 40 + 'px'
+                }
+
+                drawpumpky();
+
                 var score = 0;
                 
-                document.onkeydown = function(e)
+                document.onkeydown = function(e) //make ghosts chase ninjaman
                 {
                     if (e.keyCode == 37) //LEFT
                     {
-                        if (world[ninjaman.y][ninjaman.x - 1] != 1)
+                        if (world[ninjaman.y][ninjaman.x - 1] != 1) // wall check
                         {
                             if (world[ninjaman.y][ninjaman.x - 1] == 2)
                             {
