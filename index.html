@@ -45,8 +45,26 @@
 		]
 
 		function drawPlayer() {
-			content = "<div class = 'player' style='left: 100px; top: 100px'></div>";
+			content = "<div class = 'player' style='left: " + player.left + "px; top: " + player.top + "px'></div>";
 			document.getElementById('players').innerHTML = content
+		}
+
+		drawPlayer();
+
+		document.onkeydown = function(e) {
+			if (e.keyCode == 37) { //left
+				player.left -= 10
+			}
+			if (e.keyCode == 39) { //right
+				player.left += 10
+			}
+			if (e.keyCode == 38) { //up
+				player.top -= 10
+			}
+			if (e.keyCode == 40) { //down
+				player.top += 10
+			}
+			drawPlayer();
 		}
 
 	</script>
