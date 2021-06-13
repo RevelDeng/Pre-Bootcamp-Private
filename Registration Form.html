@@ -1,34 +1,74 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
+        <meta charset="utf-8">
         <title>My Registration Form</title>
+        <style>
+            .sixinputs {
+                position: absolute;
+                left: 100px;
+            }
+        </style>
     </head>
     <body>
+        <strong>My Registration Form</strong>
         <p>
-            First Name:
-
+            <label>
+                First Name: <input type = "text" class="sixinputs">
+            </label>
         </p>
         <p>
-            Last Name:
+            <label>
+                Last Name: <input type = "text" class="sixinputs">
+            </label>
         </p>
         <p>
-            Email:
+            <label>
+                Email: <input type="text" class="sixinputs">
+            </label>
         </p>
         <p>
-            Password:
+            <label>
+                Password: <input type="password" class="sixinputs">
+            </label>
         </p>
         <p>
-            PW Confirm:
+            <label>
+                PW Confirm: <input type="password" class="sixinputs">
+            </label>
         </p>
         <p>
-            Birthday:
+            <label>
+                Birthday: <input type ="date" class="sixinputs">
+            </label>
         </p>
-        <!-- radio for gender -->
+            <label>
+                <input type="radio" name = "gender" value = "Male"> Male
+            </label>
+            <label>
+                <input type="radio" name = "gender" value = "Female"> Female
+            </label>
+            <label>
+                <input type="radio" name = "gender" value = "decline"> Other
+            </label>
         <p>
-            A short description about yourself:
+            <label>
+                A short description about yourself: 
+                    <textarea rows="6" cols="50"></textarea>
+            </label>
         </p>
         <p>
-            Favorite Language:
+            <label>
+                Favorite Language: 
+                <select>
+                    <option>Javascript</option>
+                    <option>CSS</option>
+                    <option>HTML</option>
+                    <option>Python</option>
+                    <option>SQL</option>
+                    <option>Ruby</option>
+                </select>
+            </label>
         </p>
         <form>
             <input type="submit" value="Submit">
